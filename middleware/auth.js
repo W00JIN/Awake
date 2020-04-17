@@ -1,11 +1,13 @@
 const { User } = require('../models/User')
+const jwt = require('jsonwebtoken')
 
 let auth = (req, res, next) => {
     //로그인 인증 처리
    
     //클라이언트 쿠키에서 토큰 가져오기
-    let token = req.cookies.x_auth 
+    let token = req.cookies.x_auth
     //토큰 복호화 후 데이터베이스에서 유저 정보 찾기
+
     User.decodeToken(token, (err,user) => {
         if(err) throw err
         if(!user) {

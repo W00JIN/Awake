@@ -59,7 +59,7 @@ app.post('/login', (req,res) => {
       user.generateToken((err,user)=>{
         if(err) return res.status(400).send(err);
         //token을 쿠키에 저장 (로컬 스토리지나 세션에도 저장 가능)
-        res.cookie('x-auth', user.token)
+        res.cookie('x_auth', user.token)
         .status(200)
         .json({ loginSuccess: true, userId: user._id, token: user.token })
       })

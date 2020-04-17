@@ -63,20 +63,20 @@ userSchema.methods.generateToken = function(cb) {
     //로그인 시 토큰 생성 
     // user id + 'loginToken'을 암호화
     var user = this;
-    var token =  jwt.sign(user._id.toHexString(),'loginToken')
+    var token =  jwt.sign( user._id.toHexString() ,'loginToken')
 
     user.token = token;
     user.save(function (err, user){
         if(err) return cb(err)
-        cb(null, user);
+        cb(null, user)
     })
 }
 
 userSchema.statics.decodeToken = function (token, cb) {
     //토큰을 복호화 하여 _id를 얻고 이를 데이터베이스에서 조회
     var user = this;
-
-    jwt.verify(token,'loginToken',function(err, decoded){
+    
+    jwt.verify(token,"loginToken",function(err, decoded){
         user.findOne({'_id': decoded, 'token':token}, function(err, user){
             if(err) return cb(err)
             cb(null, user)
