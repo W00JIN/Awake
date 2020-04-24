@@ -4,10 +4,10 @@ const port = 5000
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-const config = require('./config/key')
+const config = require('../config/key')
 
-const { User } = require('./models/User')
-const { auth } = require('./middleware/auth')
+const { User } = require('../models/User')
+const { auth } = require('../middleware/auth')
 
 //application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}))
