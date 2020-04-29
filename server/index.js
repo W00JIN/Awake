@@ -4,10 +4,10 @@ const port = 5000
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-const config = require('../config/key')
+const config = require('./config/key')
 
-const { User } = require('../models/User')
-const { auth } = require('../middleware/auth')
+const { User } = require('./models/User')
+const { auth } = require('./middleware/auth')
 
 //application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}))
@@ -24,7 +24,9 @@ mongoose.connect(config.mongoURI,{
 
 app.get('/', (req,res) => res.send('hello world'))
 
-app.post('/register', (req,res) => {
+app.get('/api/hello', (req,res) => res.send('proxy test'))
+
+app.post('/api/users/register', (req,res) => {
   //회원가입시 필요한 정보를 클라이언트에서 가져오면 데이터베이스에 저장
   //유저 모델을 가져와야 함
   const user = new User(req.body)
@@ -40,7 +42,7 @@ app.post('/register', (req,res) => {
 
 })
 
-app.post('/login', (req,res) => {
+app.post('/api/users/login', (req,res) => {
   
   User.findOne({ email: req.body.email }, (err,user)=>{
     //이메일 확인
