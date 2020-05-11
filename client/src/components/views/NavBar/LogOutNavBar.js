@@ -1,32 +1,26 @@
 import React from 'react'
-import axios from 'axios'
 import {withRouter} from 'react-router-dom';
 
-import { Layout, Menu, Typography } from 'antd';
-
-const { Text } = Typography;
+import { Layout, Menu } from 'antd';
 
 const { Header } = Layout;
 
 
 function NavBar(props) {
 
-    const logoutHandler = () =>{
-        axios.get(`api/users/logout`)
-            .then(response=>{
-                if(response.data.success){
-                    props.history.push('/login');
-                }
-            })
+    const loginHandler = () =>{
+        props.history.push('/login');
     }
 
     return (
 
         <Header style={{ height:'65px'}} className="header">
-          <div className="logo" />
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-                <Text style={{ fontSize:'15px', fontWeight: 'bold', color: 'white', marginRight:'10dp'}} onClick={logoutHandler}>Awake</Text>
-          </Menu>
+            <div className="logo" />
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
+                <Menu.Item key="1" style={{ position: 'relative', left: '20px',height:"65px"}} onClick={loginHandler}>
+                    <span style={{ fontSize:'19px', fontWeight: 'bold', color: 'white', marginRight:'10dp'}}>Awake</span>
+                </Menu.Item>
+            </Menu>
         </Header>
         
     )

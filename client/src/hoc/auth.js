@@ -1,13 +1,11 @@
 import React, {useEffect} from 'react';
-import Axios from 'axios';
-import {useDispatch} from 'react-redux';
 import {auth} from '../_actions/user_action';
-
+import { useDispatch } from "react-redux";
 
 export default function (SpecificComponent, option, adminRoute = null){
 
     //option => null: 아무나 출입 가능한 페이지 / true: 로그인 한 유저만 출입 가능한 페이지 / false: 로그인 하지 않은 유저만 출입 가능한 페이지
-
+    
     const dispatch = useDispatch();
 
     function AthenticationCheck(props){
