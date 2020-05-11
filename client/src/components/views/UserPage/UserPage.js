@@ -2,15 +2,16 @@ import React,{useEffect} from 'react'
 import axios from 'axios'
 import {withRouter} from 'react-router-dom';
 
-import { Layout } from 'antd';
+import { Layout, Menu } from 'antd';
+import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 
 import NavBar from '../NavBar/NavBar'
 import UserMenu from '../Sider/Sider'
-
+const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
 
-function MainPage(props){
+function UserPage(props){
 
     useEffect(()=>{
         axios.get('/api/hello')
@@ -42,4 +43,4 @@ function MainPage(props){
     )
 }
 
-export default withRouter(MainPage)
+export default withRouter(UserPage)

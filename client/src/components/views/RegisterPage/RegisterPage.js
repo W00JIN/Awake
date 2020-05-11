@@ -2,6 +2,11 @@ import React,{useState} from 'react'
 import {useDispatch} from 'react-redux';
 import {registerUser} from '../../../_actions/user_action'
 import {withRouter} from 'react-router-dom';
+import { Button, Input } from 'antd';
+
+import { Layout } from 'antd';
+import NavBar from '../NavBar/LogOutNavBar'
+const { Content } = Layout;
 
 function RegisterPage(props){
     const dispatch = useDispatch();
@@ -47,29 +52,50 @@ function RegisterPage(props){
 
     }
     return(
+
+        <Layout>
+        <NavBar/>
+        <Content style={{ padding: '35px' , margin: '16px' }}>
+        <Layout className="site-layout-background" style={{ padding: '0' }}>
+          
+          <Content style={{ minHeight: 280 }}>
+            <div style={{backgroundColor:'white'}}>
+
+
+
+        <div style={{ display:'block',textAlign:'center', color: 'black', paddingTop:'130px', width:'95%', height:'77vh'}} >
+            <p style={{fontSize:'25pt', fontWeight: 'bold'}}>REGISTER</p>
         <div style={{
             display: 'flex', justifyContent:'center', alignItems: 'center',
-            width:'100%', height:'100vh'
+            
         }}>
-            <form style={{display:'flex', flexDirection:'column'}} onSubmit={onSubmitHandler}>
-                <label>Email</label>
-                <input type="email" value={Email} onChange={onEmailHandler}/>
-
-                <label>Name</label>
-                <input type="text" value={Name} onChange={onNameHandler}/>
-
-                <label>Password</label>
-                <input type="password" value={Password} onChange={onPasswordHandler}/>
-
-                <label>Confirm Password</label>
-                <input type="password" value={ConfirmPW} onChange={onConfirmPWHandler}/>
-
+            <form onSubmit={onSubmitHandler}>
+                <div style={{textAlign:'right', marginRight:'50px'}} >
+                <label>Email : </label>
+                <Input style={{width:'230px', marginBottom:'5px'}} type="email" value={Email} onChange={onEmailHandler}/>
+                <br/>     
+                <label>Name : </label>
+                <Input style={{width:'230px', marginBottom:'5px'}} type="text" value={Name} onChange={onNameHandler}/>
+                <br/>     
+                <label>Password : </label>
+                <Input style={{width:'230px', marginBottom:'5px'}} type="password" value={Password} onChange={onPasswordHandler}/>
+                <br/>     
+                <label>Confirm Password : </label>
+                <Input style={{width:'230px', marginBottom:'15px'}} type="password" value={ConfirmPW} onChange={onConfirmPWHandler}/>
+                </div>
                 <br/>                
-                <button type="submit">
+                <Button style={{  width:'150px'}} type="primary" htmlType="submit">
                     Register
-                </button>
+                </Button>
             </form>
         </div>
+        </div>
+
+        </div>
+          </Content>
+        </Layout>
+      </Content>
+      </Layout>
     )
 }
 
