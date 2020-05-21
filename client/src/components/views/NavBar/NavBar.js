@@ -21,6 +21,7 @@ function NavBar(props) {
     }
     const homeHandler = () => {
         props.history.push('/');
+        window.location.reload();
     }
 
     return (

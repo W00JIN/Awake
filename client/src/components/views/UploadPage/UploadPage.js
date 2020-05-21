@@ -9,14 +9,18 @@ import {useSelector} from 'react-redux';
 
 const TextArea = Input;
 const OptionValue = [
-    { value: "0", label: "category1" },
-    { value: "1", label: "category2" },
-    { value: "2", label: "category3" }
+    { value: "1", label: "category1" },
+    { value: "2", label: "category2" },
+    { value: "3", label: "category3" }
 ]
 function UploadPage(props) {
     const user = useSelector(state => state.user);
 
     const [visible, setOpen] = React.useState(false);
+    const categoryInit = OptionValue[0].value;
+    const [Description, setDescription] = useState("");
+    const [Category, setCategory] = useState(categoryInit);
+    const [FilePath, setFilePath] = useState("");
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -24,7 +28,7 @@ function UploadPage(props) {
             writer: user.userData._id,
             description: Description,
             filePath: FilePath,
-            Category: Category
+            category: Category
         }
         Axios.post('api/posts/uploadPost', variables)
             .then(response=>{
@@ -33,18 +37,24 @@ function UploadPage(props) {
                     message.success('successfully uploaded your post')
                     setTimeout(()=>{
                         props.history.push('/');
+                        window.location.reload();
                     },1000)
                 }else{
                     alert('fail to upload your content');
                 }
             })
+        setDescription("");
+        setFilePath("");
+        setCategory(categoryInit);
         setOpen(false);
     }
 
-    const categoryInit = OptionValue[0].value;
-    const [Description, setDescription] = useState("");
-    const [Category, setCategory] = useState(categoryInit);
-    const [FilePath, setFilePath] = useState("");
+    const closed = () =>{
+        setDescription("");
+        setFilePath("");
+        setCategory(categoryInit);
+        setOpen(false);
+    }
 
     const onDescriptionChange = (e) => {
         setDescription(e.currentTarget.value);
@@ -78,7 +88,7 @@ function UploadPage(props) {
     console.log(categoryInit);
     return (
         <div>
-        <Button type="default" style={{ fontSize: "x-small" }} onClick={() => setOpen(true)}>
+        <Button type="default" style={{ fontSize: "x-small" }} onClick={(e) => setOpen(true)}>
             UPLOAD
         <PlusCircleOutlined style={{ marginLeft: "5px" }} />
         </Button>
@@ -87,7 +97,7 @@ function UploadPage(props) {
             title="Upload your photo"
             visible={visible}
             onOk={onSubmit}
-            onCancel={() => setOpen(false)}
+            onCancel={closed}
             centered
             width="55%"
 

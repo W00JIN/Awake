@@ -10,6 +10,7 @@ function NavBar(props) {
 
     const loginHandler = () =>{
         props.history.push('/login');
+        window.location.reload();
     }
 
     return (
