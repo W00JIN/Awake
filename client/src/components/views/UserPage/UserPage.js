@@ -5,6 +5,10 @@ import NavBar from '../NavBar/NavBar'
 import UserMenu from '../Menu/Category'
 import UserPost from '../Post/UserPost'
 
+import {
+  Route
+} from "react-router-dom";
+
 const { Content, Sider } = Layout;
 
 function UserPage(props) {
