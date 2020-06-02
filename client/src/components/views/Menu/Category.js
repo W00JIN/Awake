@@ -13,9 +13,12 @@ const { SubMenu } = Menu;
 function UserMenu(props) {
 
   let username = "";
+  let userimg = "";
   const user = useSelector(state => state.user);
-  if (user.userData && user.userData.name) {
+  if (user.userData && user.userData.name && user.userData.image) {
+    console.log(user.userData.image);
     username = user.userData.name;
+    userimg = user.userData.image;
   }
 
 
@@ -24,7 +27,7 @@ function UserMenu(props) {
       <Card bordered={false} style={{ width: "100%", height: "100%", borderRadius: "10px" }}>
 
         <div>
-          <img alt="" src={image} style={{ borderRadius: "50%", display: "inline" }} width="30px" height="30px" />
+          <img alt="" src={userimg} style={{ borderRadius: "50%", display: "inline" }} width="30px" height="30px" />
           <p style={{ display: "inline", marginLeft: "15px", fontSize: "16px" }} >{username}</p>
           <div style={{ float: "right" }}>
 

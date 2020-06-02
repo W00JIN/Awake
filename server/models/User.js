@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
       type: String,
       maxlength: 50
   },
+  category: [new mongoose.Schema({  name: {type:String, default:"전체보기"}, name: {type:String, default:0} })],
   email: {
       type: String,
       trim: true,
@@ -21,7 +22,10 @@ const userSchema = mongoose.Schema({
       type: Number,
       default: 0
   },
-  image: String,
+  image: {
+      type: String,
+      default:"/static/media/default.649e61dc.png"
+  },
   token: {
       type: String
   },

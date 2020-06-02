@@ -59,6 +59,7 @@ router.get('/getPost', (req, res) => {
 
     Post.find()
         .populate('writer')
+        .sort([['updatedAt', -1]])
         .exec((err, posts) => {
             if (err) return res.status(400).send(err);
             res.status(200).json({ success: true, posts })
@@ -69,6 +70,7 @@ router.post('/getPostDetail', (req, res) => {
     //DB에서 게시물 정보 가져옴
     Post.findOne({ "_id": req.body.postId })
         .populate('writer')
+        .sort([['updatedAt', -1]])
         .exec((err,postDetail)=>{
             if(err) return res.status(400).send(err)
             return res.status(200).json({ success: true, postDetail})

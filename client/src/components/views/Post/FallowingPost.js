@@ -8,6 +8,7 @@ import Axios from 'axios';
 import { Row, Col } from 'antd';
 
 import { useSelector } from "react-redux";
+import Subscribe from './Subscribe';
 
 const { Search } = Input;
 
@@ -19,7 +20,8 @@ function FallowingPost(props) {
     const [isLiked, setisLiked] = React.useState(false)
     const [Post, setPost] = React.useState([])
     const [Description, setDescription] = React.useState("")
-    const [ImgPath, setImgPath] = React.useState("http://localhost:5000/uploads/default.jpg")
+    const [ImgPath, setImgPath] = React.useState("")
+
     const closed = () => {
         setOpen(false);
     }
@@ -48,7 +50,6 @@ function FallowingPost(props) {
     const userHandler = () => {
         props.history.push('/user');
     }
-
     const modalHandler = (e) => {
 
         console.log(e.currentTarget.src);
@@ -74,16 +75,13 @@ function FallowingPost(props) {
 
     const renderPosts = Post.map((post, index) => {
 
-        return <Card style={{ width: "85%", margin: 'auto', marginTop: "10px", marginBottom: "10px" }} >
+        return <Card key={index} style={{ width: "85%", margin: 'auto', marginTop: "10px", marginBottom: "10px" }} >
 
             <div style={{ width: "100%", paddingBottom: "15px", borderBottom: "1px solid #f0f0f0", marginBottom: "10px" }}>
                 <img alt="" src={image} style={{ borderRadius: "50%", display: "inline", marginLeft: "10px" }} width="25px" height="25px" />
-                <p style={{ display: "inline", marginLeft: "15px", fontSize: "14px" }} onClick={userHandler}>{post.writer.name}</p>
+                <p style={{ display: "inline", marginLeft: "15px", fontSize: "14px" }} >{post.writer.name}</p>
 
                 <div style={{ float: "right" }}>
-                    <Button style={{ fontSize: "x-small" }}>
-                        FALLOWING
-          </Button>
                 </div>
             </div>
 
@@ -108,7 +106,7 @@ function FallowingPost(props) {
     })
 
     return (
-        <div style={{ width: '100%', height: '100%' }}>
+        <div style={{ width: '100%', height: '80vh' }}>
 
             {renderPosts}
 
@@ -120,9 +118,16 @@ function FallowingPost(props) {
                 onCancel={closed}
                 centered
                 width="65%"
-
+                footer={[
+                    <Search
+                        placeholder="Comment on your friend's pic"
+                        onSearch={value => console.log(value)}
+                        style={{ width: "95%", display: "flex", margin: "auto", marginTop: "10px", marginBottom: "10px" }}
+                        enterButton="comment"
+                    />
+                ]}
             >
-                <div style={{ width: "100%", height: "380px", paddingRight: "20px", paddingLeft: "20px" }} >
+                <div style={{ width: "100%", height: "380px", paddingRight: "20px", paddingLeft: "20px", paddingTop: "20px" }} >
                     <Row>
                         <Col span={13} style={{ height: "100%", borderRight: "1px solid" }}>
                             <div style={{}}>
@@ -134,8 +139,8 @@ function FallowingPost(props) {
                         </Col>
 
                         <Col span={11} style={{ height: "100%" }}>
-                            <div style={{ marginLeft: "20px"}}>
-                                <span onClick={likeIconHandler} style={{  marginRight: "15px", paddingTop: "30px" }}>
+                            <div style={{ marginLeft: "20px" }}>
+                                <span onClick={likeIconHandler} style={{ marginRight: "15px", paddingTop: "30px" }}>
                                     {isLiked ? <SmileTwoTone style={{ fontSize: "25px" }} /> : <SmileOutlined style={{ fontSize: "25px" }} />}
                                 </span>
                                 <span>100 People Like This Post</span>

@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react'
 import { withRouter } from 'react-router-dom';
-import { Row, Col, Modal } from 'antd';
+import { Row, Col, Modal, Input } from 'antd';
+
+import { SmileOutlined, SmileTwoTone } from '@ant-design/icons';
 import Axios from 'axios';
 
 import { useSelector } from "react-redux";
 
 
+const { Search } = Input;
 function UserPost(props) {
 
     let userid = ""
@@ -14,11 +17,12 @@ function UserPost(props) {
         userid = user.userData._id;
     }
 
+    const [isLiked, setisLiked] = React.useState(false)
     const [Title, setTitle] = React.useState("")
     const [visible, setOpen] = React.useState(false);
     const [Post, setPost] = React.useState([])
     const [Description, setDescription] = React.useState("")
-    const [ImgPath, setImgPath] = React.useState("http://localhost:5000/uploads/default.jpg")
+    const [ImgPath, setImgPath] = React.useState("")
     const closed = () => {
         setOpen(false);
     }
@@ -38,6 +42,11 @@ function UserPost(props) {
             })
     }, [])
 
+    const likeIconHandler = () => {
+        setisLiked(prevState => {
+            return !prevState
+        })
+    }
     const modalHandler = (e) => {
         console.log(e.currentTarget.src);
         setImgPath(e.currentTarget.src);
@@ -63,7 +72,7 @@ function UserPost(props) {
 
         if (post.writer._id === user.userData._id) {
             console.log(post);
-            return <Col lg={8} md={12} xs={24}>
+            return <Col key={index} lg={8} md={12} xs={24}>
                 <div style={{ padding: "20px" }}>
                     <img id={post._id} alt="" src={`http://localhost:5000/${post.filePath}`} style={{ width: "17vw", height: "17vw" }} onClick={modalHandler} />
                 </div>
@@ -73,10 +82,10 @@ function UserPost(props) {
 
     return (
         <div>
-            <Row gutter={[16, 24]} style={{ minHeight: "100vh" }}>
+            <Row gutter={[16, 24]} style={{ minHeight: "63vh" }}>
                 {renderPosts}
             </Row>
-
+            
             <Modal
                 title={Title}
                 visible={visible}
@@ -84,9 +93,16 @@ function UserPost(props) {
                 onCancel={closed}
                 centered
                 width="65%"
-
+                footer={[
+                    <Search
+                    placeholder="Comment on your friend's pic"
+                    onSearch={value => console.log(value)}
+                    style={{ width: "95%", display:"flex", margin:"auto", marginTop:"10px", marginBottom:" 10px" }}
+                    enterButton="comment"
+                />
+                ]}
             >
-                <div style={{ width: "100%", height: "380px", paddingRight: "20px", paddingLeft: "20px" }} >
+                <div style={{ width: "100%", height: "380px", paddingRight: "20px", paddingLeft: "20px" ,paddingTop:"20px"}} >
                     <Row>
                         <Col span={13} style={{ height: "100%", borderRight: "1px solid" }}>
                             <div style={{}}>
@@ -98,7 +114,12 @@ function UserPost(props) {
                         </Col>
 
                         <Col span={11} style={{ height: "100%" }}>
-                            <p>hello</p>
+                            <div style={{ marginLeft: "20px"}}>
+                                <span onClick={likeIconHandler} style={{  marginRight: "15px", paddingTop: "30px" }}>
+                                    {isLiked ? <SmileTwoTone style={{ fontSize: "25px" }} /> : <SmileOutlined style={{ fontSize: "25px" }} />}
+                                </span>
+                                <span>100 People Like This Post</span>
+                            </div>
                         </Col>
                     </Row>
                 </div>
