@@ -13,19 +13,21 @@ function Fallow(props) {
     const [Type, setType] = React.useState("default")
 
     useEffect(() => { //돔이 로드되면 수행
+        setTimeout(() => {
 
-        Axios.post('/api/fallow/fallowInfo', variable)
-            .then(response => {
-                if (response.data.success) {
-                    setType("primary")
-                }else{
-                    setType("default")
-                }
-            })
+            Axios.post('/api/fallow/fallowInfo', variable)
+                .then(response => {
+                    if (response.data.success) {
+                        setType("primary")
+                    } else {
+                        setType("default")
+                    }
+                })
+        }, 50)
     }, [props.change])
 
     const fallowHandler = () => {
-        
+
         props.onClick(!props.change);
 
         if (Type == "default") {

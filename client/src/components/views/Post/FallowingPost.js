@@ -20,7 +20,8 @@ function FallowingPost(props) {
     const [Post, setPost] = React.useState([])
     const [Description, setDescription] = React.useState("")
     const [ImgPath, setImgPath] = React.useState("")
-    const [FallowCliked, setFallowCliked] = React.useState(true)
+
+  const [FallowCliked, setFallowCliked] = React.useState(props.change)
 
     const closed = () => {
         setOpen(false);
@@ -35,7 +36,7 @@ function FallowingPost(props) {
                     setPost(response.data.posts)
                 }
                 else {
-                    alert('fail to loading posts')
+                    alert('fail to load posts')
                 }
             })
     }, [])
@@ -48,9 +49,10 @@ function FallowingPost(props) {
     }
 
     const FallowClikedHandler = (setClicked) => {
-        console.log(setClicked);
         setFallowCliked(setClicked);
-    }
+        props.FallowClikedHandler(setClicked);
+      }
+    
 
     const userHandler = () => {
         props.history.push('/user');
@@ -138,7 +140,7 @@ function FallowingPost(props) {
                     />
                 ]}
             >
-                <div style={{ width: "100%", height: "380px", paddingRight: "20px", paddingLeft: "20px", paddingTop: "20px" }} >
+                <div style={{ width: "100%", minHeight: "380px", paddingRight: "20px", paddingLeft: "20px", paddingTop: "20px" }} >
                     <Row>
                         <Col span={13} style={{ height: "100%", borderRight: "1px solid" }}>
                             <div style={{}}>
