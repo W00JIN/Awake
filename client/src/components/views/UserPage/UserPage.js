@@ -29,8 +29,7 @@ function UserPage(props) {
     const variables = {
       userID: pageID
     }
-    console.log(variables);
-
+    
     Axios.post('/api/users/getUserDetail', variables)
       .then(response => {
         if (response.data.success) {
@@ -43,7 +42,6 @@ function UserPage(props) {
           alert('fail to loading categories')
         }
       })
-
 
   }, [])
 
@@ -83,7 +81,7 @@ function UserPage(props) {
                   </p>
                   <div style={{ float: "right" }}>
 
-                    {(pageID == currentID) &&  <AddCagetory />}
+                    {(pageID == currentID) &&  <AddCagetory userid={currentID}/>}
                     
                   </div>
 

@@ -6,7 +6,6 @@ import UploadPage from '../UploadPage/UploadPage'
 
 
 function UserMenu(props) {
-  console.log("props: " + props.username);
 
   return (
     <div>

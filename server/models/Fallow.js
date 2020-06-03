@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = require('mongoose')
 
-const subscribeSchema = mongoose.Schema({
+const fallowSchema = mongoose.Schema({
     userTo: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -11,12 +11,12 @@ const subscribeSchema = mongoose.Schema({
         ref: 'User'
     },
     category: {
-        type: Number
+        type: Schema.Types.ObjectId
     }
 }, { timestamps: true })
 
 
 
-const Subscribe = mongoose.model('Subscribe', subscribeSchema)
-module.exports = { Subscribe }
+const Fallow = mongoose.model('Fallow', fallowSchema)
+module.exports = { Fallow }
 

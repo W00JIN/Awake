@@ -15,7 +15,6 @@ router.post('/register', (req,res) => {
   //회원가입시 필요한 정보를 클라이언트에서 가져오면 데이터베이스에 저장
   //유저 모델을 가져와야 함
   const user = new User(req.body)
-
   //mongoDB method - 정보들이 user 모델에 저장됨
   //save 전에 비밀번호 암호화 User.js pre function
   user.save((err, userInfo)=>{
@@ -80,7 +79,6 @@ router.get('/logout', auth, (req,res)=>{
 
 router.post('/addCategory', (req, res) => {
   //DB에 카테고리 추가
-
   User.findOneAndUpdate({ "_id": req.body.user }, {$addToSet: { "category":{"name": req.body.categoryName }}}, 
   (err,user)=>{
     if(err) return res.json({ success: false, err })

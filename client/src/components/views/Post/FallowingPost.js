@@ -7,8 +7,7 @@ import Axios from 'axios';
 
 import { Row, Col } from 'antd';
 
-import { useSelector } from "react-redux";
-import Subscribe from './Subscribe';
+import Fallow from '../Fallow/Fallow';
 
 const { Search } = Input;
 
@@ -21,6 +20,7 @@ function FallowingPost(props) {
     const [Post, setPost] = React.useState([])
     const [Description, setDescription] = React.useState("")
     const [ImgPath, setImgPath] = React.useState("")
+    const [FallowCliked, setFallowCliked] = React.useState(true)
 
     const closed = () => {
         setOpen(false);
@@ -45,6 +45,11 @@ function FallowingPost(props) {
         setisLiked(prevState => {
             return !prevState
         })
+    }
+
+    const FallowClikedHandler = (setClicked) => {
+        console.log(setClicked);
+        setFallowCliked(setClicked);
     }
 
     const userHandler = () => {
@@ -87,7 +92,7 @@ function FallowingPost(props) {
                     &nbsp;/ {post.writer.category[post.category].name}</p>
 
                 <div style={{ float: "right" }}>
-                    <Subscribe />
+                    <Fallow userTo={post.writer._id} userFrom={props.userid} userToCategory={post.writer.category[post.category]._id} onClick={FallowClikedHandler} change={FallowCliked}/>
                 </div>
             </div>
 

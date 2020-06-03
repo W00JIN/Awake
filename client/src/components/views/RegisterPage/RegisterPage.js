@@ -40,7 +40,8 @@ function RegisterPage(props) {
         let body = {
             email: Email,
             name: Name,
-            password: Password
+            password: Password,
+            category:{"name": "default category" }
         }
 
         dispatch(registerUser(body))
@@ -53,7 +54,7 @@ function RegisterPage(props) {
     }
     return (
 
-        <Layout style={{height:"100vh"}}>
+        <Layout style={{ height: "100vh" }}>
             <NavBar />
             <Content style={{ padding: '35px', margin: '16px' }}>
                 <Layout className="site-layout-background" style={{ padding: '0' }}>
@@ -64,7 +65,7 @@ function RegisterPage(props) {
 
 
                             <div style={{ display: 'block', textAlign: 'center', color: 'black', paddingTop: '130px', width: '95%', height: '79vh' }} >
-                                <p style={{ marginTop:"30px", fontSize: '21pt', fontWeight: 'bold' }}>REGISTER</p>
+                                <p style={{ marginTop: "30px", fontSize: '21pt', fontWeight: 'bold' }}>REGISTER</p>
                                 <div style={{
                                     display: 'flex', justifyContent: 'center', alignItems: 'center',
 
@@ -86,7 +87,7 @@ function RegisterPage(props) {
                                         <br />
                                         <Button style={{ width: '150px' }} type="primary" htmlType="submit">
                                             Register
-                </Button>
+                                        </Button>
                                     </form>
                                 </div>
                             </div>

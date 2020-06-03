@@ -2,42 +2,54 @@ import React, { useEffect } from 'react'
 import { Button } from 'antd';
 import Axios from 'axios';
 
-function Subscribe(props) {
+function Fallow(props) {
 
     let variable = {
         userTo: props.userTo,
-        userFrom: props.userFrom
+        userFrom: props.userFrom,
+        category: props.userToCategory
     }
 
     const [Type, setType] = React.useState("default")
 
     useEffect(() => { //돔이 로드되면 수행
 
-
-        Axios.get('/api/subscribe/subscribeInfo', variable)
+        Axios.post('/api/fallow/fallowInfo', variable)
             .then(response => {
                 if (response.data.success) {
                     setType("primary")
-                }
-                else {
-                    alert('fail to loading posts')
+                }else{
+                    setType("default")
                 }
             })
-    }, [])
+    }, [props.change])
 
     const fallowHandler = () => {
-        if (Type == "primary") {
-            Axios.get('/api/subscribe/subscribe', variable)
+        
+        props.onClick(!props.change);
+
+        if (Type == "default") {
+            Axios.post('/api/fallow/fallow', variable)
                 .then(response => {
                     if (response.data.success) {
                         setType("primary")
                     }
                     else {
-                        alert('fail to loading posts')
+                        alert('fail to fallow')
                     }
                 })
         }
-        else setType("default")
+        else {
+            Axios.post('/api/fallow/unFallow', variable)
+                .then(response => {
+                    if (response.data.success) {
+                        setType("default")
+                    }
+                    else {
+                        alert('fail to unfallow')
+                    }
+                })
+        }
     }
 
     return (
@@ -50,4 +62,4 @@ function Subscribe(props) {
     )
 }
 
-export default Subscribe
+export default Fallow
