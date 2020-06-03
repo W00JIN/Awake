@@ -79,9 +79,15 @@ function FallowingPost(props) {
 
             <div style={{ width: "100%", paddingBottom: "15px", borderBottom: "1px solid #f0f0f0", marginBottom: "10px" }}>
                 <img alt="" src={image} style={{ borderRadius: "50%", display: "inline", marginLeft: "10px" }} width="25px" height="25px" />
-                <p style={{ display: "inline", marginLeft: "15px", fontSize: "14px" }} >{post.writer.name}</p>
+
+                <p style={{ display: "inline", marginLeft: "15px", fontSize: "14px" }} >
+                    <a href={`/user/${post.writer._id}`} style={{ color: "black" }}>
+                        {post.writer.name}
+                    </a>
+                    &nbsp;/ {post.writer.category[post.category].name}</p>
 
                 <div style={{ float: "right" }}>
+                    <Subscribe />
                 </div>
             </div>
 

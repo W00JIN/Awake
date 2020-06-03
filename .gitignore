@@ -1,4 +1,5 @@
-/uploads
 /client/node_modules
 /server/node_modules
+/server/uploads
+/server/image
 dev.js

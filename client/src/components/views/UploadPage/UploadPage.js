@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Form, Input, Modal, Button, message } from 'antd';
 
@@ -8,18 +8,32 @@ import Axios from 'axios';
 import {useSelector} from 'react-redux';
 
 const TextArea = Input;
-const OptionValue = [
-    { value: "1", label: "category1" },
-    { value: "2", label: "category2" },
-    { value: "3", label: "category3" }
-]
 function UploadPage(props) {
     const user = useSelector(state => state.user);
 
-    const [visible, setOpen] = React.useState(false);
-    const categoryInit = OptionValue[0].value;
+    useEffect(() => {
+
+      const variables = {
+        userID: props.userid
+      }
+      console.log(variables);
+  
+      Axios.post('/api/users/getCategory', variables)
+        .then(response => {
+          if (response.data.success) {
+            console.log(response.data.user[0].category)
+            setOptionValue(response.data.user[0].category)
+          }
+          else {
+            alert('fail to loading categories')
+          }
+        })
+    }, [props.userid])
+
+    const [OptionValue, setOptionValue] = useState([]);
+    const [visible, setOpen] = useState(false);
     const [Description, setDescription] = useState("");
-    const [Category, setCategory] = useState(categoryInit);
+    const [Category, setCategory] = useState("0");
     const [FilePath, setFilePath] = useState("");
 
     const onSubmit = (e) => {
@@ -45,14 +59,14 @@ function UploadPage(props) {
             })
         setDescription("");
         setFilePath("");
-        setCategory(categoryInit);
+        setCategory("0");
         setOpen(false);
     }
 
     const closed = () =>{
         setDescription("");
         setFilePath("");
-        setCategory(categoryInit);
+        setCategory("0");
         setOpen(false);
     }
 
@@ -85,7 +99,6 @@ function UploadPage(props) {
             })
     }
 
-    console.log(categoryInit);
     return (
         <div>
         <Button type="default" style={{ fontSize: "x-small" }} onClick={(e) => setOpen(true)}>
@@ -138,7 +151,7 @@ function UploadPage(props) {
                     <br />
                     <select onChange={onCategoryChange}>
                         {OptionValue.map((item, index) => {
-                            return <option key={index} value={item.value}>{item.label}</option>
+                            return <option key={index} value={index}>{item.name}</option>
                         })}
                     </select>
 

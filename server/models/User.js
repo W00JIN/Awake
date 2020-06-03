@@ -8,7 +8,11 @@ const userSchema = mongoose.Schema({
       type: String,
       maxlength: 50
   },
-  category: [new mongoose.Schema({  name: {type:String, default:"전체보기"}, name: {type:String, default:0} })],
+  category: [{ 
+      name: {
+        type:String
+      }
+  }],
   email: {
       type: String,
       trim: true,

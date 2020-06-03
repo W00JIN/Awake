@@ -3,10 +3,10 @@ import { Button } from 'antd';
 import Axios from 'axios';
 
 function Subscribe(props) {
-    
-    let variable ={ 
-        userTo : props.userTo,
-        userFrom : props.userFrom
+
+    let variable = {
+        userTo: props.userTo,
+        userFrom: props.userFrom
     }
 
     const [Type, setType] = React.useState("default")
@@ -25,19 +25,17 @@ function Subscribe(props) {
             })
     }, [])
 
-
-
     const fallowHandler = () => {
         if (Type == "primary") {
             Axios.get('/api/subscribe/subscribe', variable)
-            .then(response => {
-                if (response.data.success) {
-                    setType("primary")
-                }
-                else {
-                    alert('fail to loading posts')
-                }
-            })
+                .then(response => {
+                    if (response.data.success) {
+                        setType("primary")
+                    }
+                    else {
+                        alert('fail to loading posts')
+                    }
+                })
         }
         else setType("default")
     }
@@ -47,7 +45,7 @@ function Subscribe(props) {
 
             <Button style={{ fontSize: "x-small" }} type={Type} onClick={fallowHandler}>
                 FALLOWING
-                    </Button>
+            </Button>
         </div>
     )
 }

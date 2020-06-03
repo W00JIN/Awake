@@ -11,12 +11,6 @@ import { useSelector } from "react-redux";
 const { Search } = Input;
 function UserPost(props) {
 
-    let userid = ""
-    const user = useSelector(state => state.user);
-    if (user.userData && user.userData._idd) {
-        userid = user.userData._id;
-    }
-
     const [isLiked, setisLiked] = React.useState(false)
     const [Title, setTitle] = React.useState("")
     const [visible, setOpen] = React.useState(false);
@@ -28,8 +22,6 @@ function UserPost(props) {
     }
 
     useEffect(() => { //돔이 로드되면 처음 하는 일, 두번째 파라미터가 []이면 한번만 수행, 없으면 계속 수행
-
-
         Axios.get('/api/posts/getPost')
             .then(response => {
                 if (response.data.success) {
@@ -69,14 +61,20 @@ function UserPost(props) {
     }
 
     const renderPosts = Post.map((post, index) => {
-
-        if (post.writer._id === user.userData._id) {
-            console.log(post);
-            return <Col key={index} lg={8} md={12} xs={24}>
-                <div style={{ padding: "20px" }}>
-                    <img id={post._id} alt="" src={`http://localhost:5000/${post.filePath}`} style={{ width: "17vw", height: "17vw" }} onClick={modalHandler} />
-                </div>
-            </Col>
+        if (post.writer._id === props.userid) {
+            if (props.category == 0) {
+                return <Col key={index} lg={8} md={12} xs={24} >
+                    <div style={{ padding: "20px" }}>
+                        <img id={post._id} alt="" src={`http://localhost:5000/${post.filePath}`} style={{ width: "17vw", height: "17vw" }} onClick={modalHandler} />
+                    </div>
+                </Col>
+            } else if (props.category == post.category+1) {
+                return <Col key={index} lg={8} md={12} xs={24} >
+                    <div style={{ padding: "20px" }}>
+                        <img id={post._id} alt="" src={`http://localhost:5000/${post.filePath}`} style={{ width: "17vw", height: "17vw" }} onClick={modalHandler} />
+                    </div>
+                </Col>
+            }
         }
     })
 
@@ -85,7 +83,7 @@ function UserPost(props) {
             <Row gutter={[16, 24]} style={{ minHeight: "63vh" }}>
                 {renderPosts}
             </Row>
-            
+
             <Modal
                 title={Title}
                 visible={visible}
@@ -95,14 +93,14 @@ function UserPost(props) {
                 width="65%"
                 footer={[
                     <Search
-                    placeholder="Comment on your friend's pic"
-                    onSearch={value => console.log(value)}
-                    style={{ width: "95%", display:"flex", margin:"auto", marginTop:"10px", marginBottom:" 10px" }}
-                    enterButton="comment"
-                />
+                        placeholder="Comment on your friend's pic"
+                        onSearch={value => console.log(value)}
+                        style={{ width: "95%", display: "flex", margin: "auto", marginTop: "10px", marginBottom: " 10px" }}
+                        enterButton="comment"
+                    />
                 ]}
             >
-                <div style={{ width: "100%", height: "380px", paddingRight: "20px", paddingLeft: "20px" ,paddingTop:"20px"}} >
+                <div style={{ width: "100%", height: "380px", paddingRight: "20px", paddingLeft: "20px", paddingTop: "20px" }} >
                     <Row>
                         <Col span={13} style={{ height: "100%", borderRight: "1px solid" }}>
                             <div style={{}}>
@@ -114,8 +112,8 @@ function UserPost(props) {
                         </Col>
 
                         <Col span={11} style={{ height: "100%" }}>
-                            <div style={{ marginLeft: "20px"}}>
-                                <span onClick={likeIconHandler} style={{  marginRight: "15px", paddingTop: "30px" }}>
+                            <div style={{ marginLeft: "20px" }}>
+                                <span onClick={likeIconHandler} style={{ marginRight: "15px", paddingTop: "30px" }}>
                                     {isLiked ? <SmileTwoTone style={{ fontSize: "25px" }} /> : <SmileOutlined style={{ fontSize: "25px" }} />}
                                 </span>
                                 <span>100 People Like This Post</span>

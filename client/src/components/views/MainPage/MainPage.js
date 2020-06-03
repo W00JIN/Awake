@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { withRouter } from 'react-router-dom';
 import { Layout } from 'antd';
 import NavBar from '../NavBar/NavBar'
-import UserMenu from '../Menu/UserInfo'
+import UserMenu from '../SideMenu/UserInfo'
 import FallowingPost from '../Post/FallowingPost'
 
 import { useSelector } from "react-redux";
@@ -31,7 +31,7 @@ function MainPage(props) {
               <FallowingPost userid={userid} username={username} userimg={userimg}/>
             </div>
           </Content>
-          <Sider className="site-layout-background" theme="light" width={300} style={{ borderRadius: "5px", margin: "0", padding: "0" }}>
+          <Sider className="site-layout-background" theme="light" width={300} style={{ borderRadius: "5px", border: "1px solid" }}>
             <UserMenu userid={userid} username={username} userimg={userimg}/>
           </Sider>
         </Layout>

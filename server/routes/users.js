@@ -78,4 +78,27 @@ router.get('/logout', auth, (req,res)=>{
   });
 });
 
+router.post('/addCategory', (req, res) => {
+  //DB에 카테고리 추가
+
+  User.findOneAndUpdate({ "_id": req.body.user }, {$addToSet: { "category":{"name": req.body.categoryName }}}, 
+  (err,user)=>{
+    if(err) return res.json({ success: false, err })
+    return res.status(200).send({ 
+      success: true,
+      message: "successfully added categoty"
+    });
+  });
+
+});
+
+router.post('/getUserDetail', (req, res) => {
+  //DB에서 user 정보 가져옴
+  User.find({ "_id": req.body.userID })
+      .exec((err, userDetail) => {
+          if (err) return res.status(400).send(err);
+          res.status(200).json({ success: true, userDetail })
+      })
+});
+
 module.exports = router;

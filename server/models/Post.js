@@ -13,7 +13,7 @@ const postSchema = mongoose.Schema({
         type: String
     },
     category: {
-        type: String
+        type: Number
     }
 }, { timestamps: true })
 
