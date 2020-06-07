@@ -7,6 +7,7 @@ import { Menu, Card, Button } from 'antd';
 import Axios from 'axios';
 import AddCagetory from '../Category/AddCategory'
 import { useSelector } from "react-redux";
+import Fallow from '../Fallow/Fallow';
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
@@ -25,11 +26,14 @@ function UserPage(props) {
   const [CurrentCategory, setCurrentCategory] = React.useState("0")
 
 
+  const FallowClikedHandler = (setClicked) => {
+  }
+
   useEffect(() => { //props.userid가 바뀌면 수행
     const variables = {
       userID: pageID
     }
-    
+
     Axios.post('/api/users/getUserDetail', variables)
       .then(response => {
         if (response.data.success) {
@@ -46,12 +50,19 @@ function UserPage(props) {
   }, [])
 
   const category = CategoryArr.map((category, index) => {
-    return <Menu.Item key={index + 1}>{category.name}</Menu.Item>
+    return <Menu.Item key={index + 1}>
+      {category.name}
+      <span style={{ float: "right" }}>
+
+        {pageID && currentID && pageID != currentID &&
+          <Fallow userTo={pageID} userFrom={currentID} userToCategory={category._id} onClick={FallowClikedHandler} change={true} />
+        }
+      </span>
+    </Menu.Item>
   })
 
 
   const MenuHandler = (e) => {
-    console.log(e.key);
     setCurrentCategory(e.key)
   }
 
@@ -81,8 +92,8 @@ function UserPage(props) {
                   </p>
                   <div style={{ float: "right" }}>
 
-                    {(pageID == currentID) &&  <AddCagetory userid={currentID}/>}
-                    
+                    {(pageID == currentID) && <AddCagetory userid={currentID} />}
+
                   </div>
 
                 </div>

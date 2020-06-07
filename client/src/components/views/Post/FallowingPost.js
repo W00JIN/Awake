@@ -94,7 +94,7 @@ function FallowingPost(props) {
                     &nbsp;/ {post.writer.category[post.category].name}</p>
 
                 <div style={{ float: "right" }}>
-                    <Fallow userTo={post.writer._id} userFrom={props.userid} userToCategory={post.writer.category[post.category]._id} onClick={FallowClikedHandler} change={FallowCliked}/>
+                    {post.writer._id && props.userid && post.writer._id != props.userid && <Fallow userTo={post.writer._id} userFrom={props.userid} userToCategory={post.writer.category[post.category]._id} onClick={FallowClikedHandler} change={FallowCliked}/>}
                 </div>
             </div>
 

@@ -50,7 +50,6 @@ router.post('/unFallow', (req, res) => {
 router.post('/getFallowingList', (req, res) => {
   Fallow.find({ "userFrom": req.body.userID })
     .populate('userTo')
-    .sort([['name', 1]])
     .exec((err, fallowing) => {
       if (err) return res.status(400).send(err);
       res.status(200).json({ success: true, fallowing })
@@ -60,7 +59,6 @@ router.post('/getFallowingList', (req, res) => {
 router.post('/getFallowerList', (req, res) => {
   Fallow.find({ "userTo": req.body.userID })
     .populate('userFrom')
-    .sort([['name', 1]])
     .exec((err, fallower) => {
       if (err) return res.status(400).send(err);
       res.status(200).json({ success: true, fallower })

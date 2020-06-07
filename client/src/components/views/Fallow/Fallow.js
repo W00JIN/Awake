@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button } from 'antd';
+import { Button, Switch } from 'antd';
 import Axios from 'axios';
 
 function Fallow(props) {
@@ -9,35 +9,62 @@ function Fallow(props) {
         userFrom: props.userFrom,
         category: props.userToCategory
     }
+    const [Type, setType] = React.useState(false)
 
-    const [Type, setType] = React.useState("default")
+    useEffect(() => { //돔이 로드되면 수행
+
+        setTimeout(() => {
+
+                console.log(variable);
+                Axios.post('/api/fallow/fallowInfo', variable)
+                    .then(response => {
+                        if (response.data.success) {
+                            console.log(response.data)
+                            setType(true)
+                        } else {
+                            setType(false)
+                            console.log(response.data)
+                        }
+                    })
+            
+        }, 60)
+
+    }, [props.change])
+
 
     useEffect(() => { //돔이 로드되면 수행
         setTimeout(() => {
 
-            Axios.post('/api/fallow/fallowInfo', variable)
-                .then(response => {
-                    if (response.data.success) {
-                        setType("primary")
-                    } else {
-                        setType("default")
-                    }
-                })
-        }, 50)
-    }, [props.change])
+                console.log(variable);
+                Axios.post('/api/fallow/fallowInfo', variable)
+                    .then(response => {
+                        if (response.data.success) {
+                            console.log(response.data)
+                            setType(true)
+                        } else {
+                            setType(false)
+                            console.log(response.data)
+                        }
+                    })
+            
+        }, 60)
+
+    }, [props.userFrom])
 
     const fallowHandler = () => {
 
         props.onClick(!props.change);
 
-        if (Type == "default") {
+        if (Type == false) {
             Axios.post('/api/fallow/fallow', variable)
                 .then(response => {
                     if (response.data.success) {
-                        setType("primary")
+                        setType(true)
+                        console.log(response.data)
                     }
                     else {
                         alert('fail to fallow')
+                        console.log(response.data)
                     }
                 })
         }
@@ -45,7 +72,7 @@ function Fallow(props) {
             Axios.post('/api/fallow/unFallow', variable)
                 .then(response => {
                     if (response.data.success) {
-                        setType("default")
+                        setType(false)
                     }
                     else {
                         alert('fail to unfallow')
@@ -55,12 +82,7 @@ function Fallow(props) {
     }
 
     return (
-        <div>
-
-            <Button style={{ fontSize: "x-small" }} type={Type} onClick={fallowHandler}>
-                FALLOWING
-            </Button>
-        </div>
+        <Switch checked={Type} onChange={fallowHandler} />
     )
 }
 

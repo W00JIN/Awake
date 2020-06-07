@@ -33,12 +33,12 @@ function UploadPage(props) {
     const [OptionValue, setOptionValue] = useState([]);
     const [visible, setOpen] = useState(false);
     const [Description, setDescription] = useState("");
-    const [Category, setCategory] = useState("");
+    const [Category, setCategory] = useState(0);
     const [FilePath, setFilePath] = useState("");
 
     const onSubmit = (e) => {
 
-        if(!Description || !FilePath || !Category) {
+        if(!Description || !FilePath ) {
             alert("Fill all blank cells");
             return;
         }
@@ -66,14 +66,14 @@ function UploadPage(props) {
             })
         setDescription("");
         setFilePath("");
-        setCategory("");
+        setCategory(0);
         setOpen(false);
     }
 
     const closed = () => {
         setDescription("");
         setFilePath("");
-        setCategory("0");
+        setCategory(0);
         setOpen(false);
     }
 
