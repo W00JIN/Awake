@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Form, Input, Modal, Button, message } from 'antd';
+import { Form, Input, Modal, Button } from 'antd';
 
 import { PlusCircleOutlined } from '@ant-design/icons';
-import Dropzone from 'react-dropzone';
 import Axios from 'axios';
-import { useSelector } from 'react-redux';
 
 const TextArea = Input;
 

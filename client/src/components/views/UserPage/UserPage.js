@@ -3,13 +3,12 @@ import { withRouter } from 'react-router-dom';
 import { Layout } from 'antd';
 import NavBar from '../NavBar/NavBar'
 import UserPost from '../Post/UserPost'
-import { Menu, Card, Button } from 'antd';
+import { Menu, Card } from 'antd';
 import Axios from 'axios';
 import AddCagetory from '../Category/AddCategory'
 import { useSelector } from "react-redux";
 import Fallow from '../Fallow/Fallow';
 
-const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
 function UserPage(props) {
@@ -23,7 +22,7 @@ function UserPage(props) {
   }
   const [PageUser, setPageUser] = React.useState([])
   const [CategoryArr, setCategoryArr] = React.useState([])
-  const [CurrentCategory, setCurrentCategory] = React.useState("0")
+  const [CurrentCategory, setCurrentCategory] = React.useState(0)
 
 
   const FallowClikedHandler = (setClicked) => {
@@ -47,14 +46,14 @@ function UserPage(props) {
         }
       })
 
-  }, [])
+  }, [pageID])
 
   const category = CategoryArr.map((category, index) => {
     return <Menu.Item key={index + 1}>
       {category.name}
       <span style={{ float: "right" }}>
 
-        {pageID && currentID && pageID != currentID &&
+        {pageID && currentID && pageID !== currentID &&
           <Fallow userTo={pageID} userFrom={currentID} userToCategory={category._id} onClick={FallowClikedHandler} change={true} />
         }
       </span>
@@ -63,7 +62,7 @@ function UserPage(props) {
 
 
   const MenuHandler = (e) => {
-    setCurrentCategory(e.key)
+    setCurrentCategory(parseInt(e.key))
   }
 
   return (
@@ -92,7 +91,7 @@ function UserPage(props) {
                   </p>
                   <div style={{ float: "right" }}>
 
-                    {(pageID == currentID) && <AddCagetory userid={currentID} />}
+                    {(pageID === currentID) && <AddCagetory userid={currentID} />}
 
                   </div>
 
@@ -108,7 +107,7 @@ function UserPage(props) {
                 style={{ borderTop: "1px solid #f0f0f0" }}
                 onClick={MenuHandler}
               >
-                <Menu.Item key="0">전체 보기</Menu.Item>
+              <Menu.Item key="0">전체 보기</Menu.Item>
                 {category}
               </Menu>
             </div>

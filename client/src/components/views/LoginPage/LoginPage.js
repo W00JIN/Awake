@@ -21,9 +21,6 @@ function LoginPage(props) {
     const onPasswordHandler = (event) => {
         setPassword(event.currentTarget.value);
     }
-    const onRegisterHandelr = (event) => {
-        props.history.push('/register');
-    }
     const onSubmitHandler = (event) => {
         event.preventDefault();
         console.log('Email', Email);
@@ -44,7 +41,7 @@ function LoginPage(props) {
     }
     return (
 
-        <Layout style={{height:"100vh"}}>
+        <Layout style={{ height: "100vh" }}>
             <NavBar />
             <Content style={{ padding: '35px', margin: '16px' }}>
                 <Layout className="site-layout-background" style={{ padding: '0' }}>
@@ -52,7 +49,7 @@ function LoginPage(props) {
                         <div style={{ backgroundColor: 'white', borderRadius: "10px" }}>
 
                             <div style={{ display: 'block', textAlign: 'center', fontSize: '23pt', fontWeight: 'bold', color: 'black', paddingTop: '130px', width: '95%', height: '79vh' }} >
-                                <p style={{marginTop:"40px"}}>LOGIN</p>
+                                <p style={{ marginTop: "40px" }}>LOGIN</p>
                                 <div style={{
                                     display: 'flex', justifyContent: 'center', alignItems: 'center',
 
@@ -71,7 +68,11 @@ function LoginPage(props) {
                                             <Button type="primary" htmlType="submit" >
                                                 Login
                                             </Button>
-                                            <a onClick={onRegisterHandelr}><p style={{ fontSize: "13px", float: "left", marginTop: "12px" }}>아직 회원이 아니신가요?</p></a>
+                                            <a href='/register'>
+                                                <p style={{ fontSize: "13px", float: "left", marginTop: "12px" }}>
+                                                    아직 회원이 아니신가요?
+                                                </p>
+                                            </a>
                                         </form>
                                     </div>
                                 </div>

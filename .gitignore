@@ -2,4 +2,5 @@
 /server/node_modules
 /server/uploads
 /server/image
+/server/key
 dev.js

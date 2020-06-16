@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { withRouter } from 'react-router-dom';
 import { Layout } from 'antd';
 import NavBar from '../NavBar/NavBar'
@@ -32,7 +32,7 @@ function MainPage(props) {
       <NavBar />
       <Content style={{ padding: '15px 30px 15px 30px', margin: '16px' }}>
         <Layout className="site-layout-background" style={{ padding: '0'}} >
-          <Content style={{ backgroundColor: 'white', paddingRight: '24px', minHeight: '81vh', maxHeight: '81vh', minHeight: 280, padding: '0', marginRight: '20px', border: "1px solid", borderRadius: "5px" }}>
+          <Content style={{ backgroundColor: 'white', paddingRight: '24px', minHeight: '81vh', maxHeight: '81vh', padding: '0', marginRight: '20px', border: "1px solid", borderRadius: "5px" }}>
             <div style={{ borderRadius: "8px" }}>
               <FallowingPost userid={userid} username={username} userimg={userimg} FallowClikedHandler={FallowClikedHandler} change={FallowCliked}/>
             </div>

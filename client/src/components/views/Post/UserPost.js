@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
 import { withRouter } from 'react-router-dom';
-import { Row, Col, Modal, Input } from 'antd';
+import { Row, Col, Modal } from 'antd';
 
 import { SmileOutlined, SmileTwoTone } from '@ant-design/icons';
 import Axios from 'axios';
 
-import { useSelector } from "react-redux";
+import CommentView from './CommentView'
+import CommentSave from './CommentSave';
 
-
-const { Search } = Input;
 function UserPost(props) {
 
+    const [PostID, setPostID] = React.useState("")
+    const [CommentTo, setCommentTo] = React.useState("")
     const [isLiked, setisLiked] = React.useState(false)
     const [Title, setTitle] = React.useState("")
     const [visible, setOpen] = React.useState(false);
@@ -43,6 +44,7 @@ function UserPost(props) {
         console.log(e.currentTarget.src);
         setImgPath(e.currentTarget.src);
         const variable = { postId: e.currentTarget.id }
+        setPostID(e.currentTarget.id)
         Axios.post('/api/posts/getPostDetail', variable)
 
             .then(response => {
@@ -50,6 +52,7 @@ function UserPost(props) {
                     if (response.data && response.data.postDetail) {
                         console.log(response.data.postDetail)
                         setDescription(response.data.postDetail.description)
+                        setCommentTo(response.data.postDetail.writer._id)
                         setTitle(response.data.postDetail.writer.name + "'s Post")
                     }
                 } else {
@@ -62,13 +65,13 @@ function UserPost(props) {
 
     const renderPosts = Post.map((post, index) => {
         if (post.writer._id === props.userid) {
-            if (props.category == 0) {
+            if (props.category === 0) {
                 return <Col key={index} lg={8} md={12} xs={24} >
                     <div style={{ padding: "20px" }}>
                         <img id={post._id} alt="" src={`http://localhost:5000/${post.filePath}`} style={{ width: "17vw", height: "17vw" }} onClick={modalHandler} />
                     </div>
                 </Col>
-            } else if (props.category == post.category+1) {
+            } else if (props.category === post.category+1) {
                 return <Col key={index} lg={8} md={12} xs={24} >
                     <div style={{ padding: "20px" }}>
                         <img id={post._id} alt="" src={`http://localhost:5000/${post.filePath}`} style={{ width: "17vw", height: "17vw" }} onClick={modalHandler} />
@@ -76,6 +79,7 @@ function UserPost(props) {
                 </Col>
             }
         }
+        return <div key={index}></div>
     })
 
     return (
@@ -92,12 +96,7 @@ function UserPost(props) {
                 centered
                 width="65%"
                 footer={[
-                    <Search
-                        placeholder="Comment on your friend's pic"
-                        onSearch={value => console.log(value)}
-                        style={{ width: "95%", display: "flex", margin: "auto", marginTop: "10px", marginBottom: " 10px" }}
-                        enterButton="comment"
-                    />
+                    <CommentSave postID={PostID} commentTo={CommentTo} writer={props.userid} />
                 ]}
             >
                 <div style={{ width: "100%", height: "380px", paddingRight: "20px", paddingLeft: "20px", paddingTop: "20px" }} >
@@ -112,11 +111,15 @@ function UserPost(props) {
                         </Col>
 
                         <Col span={11} style={{ height: "100%" }}>
-                            <div style={{ marginLeft: "20px" }}>
-                                <span onClick={likeIconHandler} style={{ marginRight: "15px", paddingTop: "30px" }}>
+                            <div style={{ marginLeft: "20px", display: "flex", alignItems: "center"}}>
+                                <span onClick={likeIconHandler} style={{ marginRight: "15px"}}>
                                     {isLiked ? <SmileTwoTone style={{ fontSize: "25px" }} /> : <SmileOutlined style={{ fontSize: "25px" }} />}
                                 </span>
                                 <span>100 People Like This Post</span>
+                            </div>
+
+                            <div>
+                                <CommentView/>
                             </div>
                         </Col>
                     </Row>
