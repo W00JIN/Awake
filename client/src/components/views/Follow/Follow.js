@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Switch } from 'antd';
 import Axios from 'axios';
 
-function Fallow(props) {
+function Follow(props) {
 
     let variable = {
         userTo: props.userTo,
@@ -14,7 +14,7 @@ function Fallow(props) {
 
     useEffect(() => { //돔이 로드되면 수행
         setTimeout(() => {
-            Axios.post('/api/fallow/fallowInfo', variable)
+            Axios.post('/api/follow/FollowInfo', variable)
                 .then(response => {
                     if (response.data.success) {
                         setType(true)
@@ -26,37 +26,37 @@ function Fallow(props) {
     }, [props.change, variable])
 
 
-    const fallowHandler = () => {
+    const FollowHandler = () => {
 
         props.onClick(!props.change);
 
         if (Type === false) {
-            Axios.post('/api/fallow/fallow', variable)
+            Axios.post('/api/follow/Follow', variable)
                 .then(response => {
                     if (response.data.success) {
                         setType(true)
                     }
                     else {
-                        alert('fail to fallow')
+                        alert('fail to Follow')
                     }
                 })
         }
         else {
-            Axios.post('/api/fallow/unFallow', variable)
+            Axios.post('/api/follow/unFollow', variable)
                 .then(response => {
                     if (response.data.success) {
                         setType(false)
                     }
                     else {
-                        alert('fail to unfallow')
+                        alert('fail to unFollow')
                     }
                 })
         }
     }
 
     return (
-        <Switch checked={Type} onChange={fallowHandler} />
+        <Switch checked={Type} onChange={FollowHandler} />
     )
 }
 
-export default Fallow
+export default Follow

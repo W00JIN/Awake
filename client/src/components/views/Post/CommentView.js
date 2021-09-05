@@ -8,7 +8,6 @@ function CommentView(props) {
 
     useEffect(() => {
         setTimeout(() => {
-            console.log("get comments");
             let variable = { postID: props.postID }
 
             Axios.post('/api/comments/getComments', variable)
@@ -24,7 +23,6 @@ function CommentView(props) {
     }, [props.postID, props.value])
 
     const comment = Comments.map((comment, index) => {
-        console.log(comment)
 
         return <div key={index} style={{ borderBottom: "1px solid #f0f0f0", paddingTop: "5px", paddingBottom: "5px" }}>
             <img alt="" src={comment.writer.image} style={{ borderRadius: "50%", display: "inline" }} width="20px" height="20px" />

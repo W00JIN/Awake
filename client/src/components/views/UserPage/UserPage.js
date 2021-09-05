@@ -7,7 +7,7 @@ import { Menu, Card } from 'antd';
 import Axios from 'axios';
 import AddCagetory from '../Category/AddCategory'
 import { useSelector } from "react-redux";
-import Fallow from '../Fallow/Fallow';
+import Follow from '../Follow/Follow';
 
 const { Content, Sider } = Layout;
 
@@ -25,7 +25,7 @@ function UserPage(props) {
   const [CurrentCategory, setCurrentCategory] = React.useState(0)
 
 
-  const FallowClikedHandler = (setClicked) => {
+  const FollowClikedHandler = (setClicked) => {
   }
 
   useEffect(() => { //props.userid가 바뀌면 수행
@@ -54,7 +54,7 @@ function UserPage(props) {
       <span style={{ float: "right" }}>
 
         {pageID && currentID && pageID !== currentID &&
-          <Fallow userTo={pageID} userFrom={currentID} userToCategory={category._id} onClick={FallowClikedHandler} change={true} />
+          <Follow userTo={pageID} userFrom={currentID} userToCategory={category._id} onClick={FollowClikedHandler} change={true} />
         }
       </span>
     </Menu.Item>

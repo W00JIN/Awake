@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { Layout } from 'antd';
 import NavBar from '../NavBar/NavBar'
 import UserMenu from '../SideMenu/UserInfo'
-import FallowingPost from '../Post/FallowingPost'
+import FollowingPost from '../Post/FollowingPost'
 
 import { useSelector } from "react-redux";
 
@@ -15,7 +15,7 @@ function MainPage(props) {
   let username = "";
   let userimg = "";
   const user = useSelector(state => state.user);
-  const [FallowCliked, setFallowCliked] = React.useState(true)
+  const [FollowCliked, setFollowCliked] = React.useState(true)
 
   if (user.userData && user.userData._id && user.userData.name && user.userData.image) {
     userid = user.userData._id;
@@ -23,8 +23,8 @@ function MainPage(props) {
     userimg = user.userData.image;
   }
 
-  const FallowClikedHandler = (setClicked) => {
-    setFallowCliked(setClicked);
+  const FollowClikedHandler = (setClicked) => {
+    setFollowCliked(setClicked);
   }
 
   return (
@@ -34,11 +34,11 @@ function MainPage(props) {
         <Layout className="site-layout-background" style={{ padding: '0'}} >
           <Content style={{ backgroundColor: 'white', paddingRight: '24px', minHeight: '81vh', maxHeight: '81vh', padding: '0', marginRight: '20px', border: "1px solid", borderRadius: "5px" }}>
             <div style={{ borderRadius: "8px" }}>
-              <FallowingPost userid={userid} username={username} userimg={userimg} FallowClikedHandler={FallowClikedHandler} change={FallowCliked}/>
+              <FollowingPost userid={userid} username={username} userimg={userimg} FollowClikedHandler={FollowClikedHandler} change={FollowCliked}/>
             </div>
           </Content>
           <Sider className="site-layout-background" theme="light" width={300} style={{ borderRadius: "5px", border: "1px solid" }}>
-            <UserMenu userid={userid} username={username} userimg={userimg} change={FallowCliked}/>
+            <UserMenu userid={userid} username={username} userimg={userimg} change={FollowCliked}/>
           </Sider>
         </Layout>
       </Content>

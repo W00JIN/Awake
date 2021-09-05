@@ -2,29 +2,32 @@ import React, { useEffect } from 'react'
 import { withRouter } from 'react-router-dom';
 import { Card, Modal } from 'antd';
 import image from '../../../img/default.png';
-import { SmileOutlined, SmileTwoTone } from '@ant-design/icons';
 import Axios from 'axios';
 
 import { Row, Col } from 'antd';
 
-import Fallow from '../Fallow/Fallow';
+import Follow from '../Follow/Follow';
 
 import CommentView from './CommentView';
 import CommentSave from './CommentSave';
+import Like from '../Like/Like';
 
-function FallowingPost(props) {
+function FollowingPost(props) {
 
     const [PostID, setPostID] = React.useState("");
     const [CommentTo, setCommentTo] = React.useState("");
     const [Title, setTitle] = React.useState("");
     const [visible, setOpen] = React.useState(false);
-    const [isLiked, setisLiked] = React.useState(false)
     const [Post, setPost] = React.useState([])
     const [Description, setDescription] = React.useState("")
     const [ImgPath, setImgPath] = React.useState("")
+    const [Likes, setLikes] = React.useState(0)
 
-    const [FallowCliked, setFallowCliked] = React.useState(props.change)
+
+    const [FollowCliked, setFollowCliked] = React.useState(props.change)
     const [ChangeCommentView, setChangeCommentView] = React.useState(false)
+    const [ChangeLike, setChangeLike] = React.useState(false)
+
     const closed = () => {
         setOpen(false);
     }
@@ -37,23 +40,36 @@ function FallowingPost(props) {
                     setPost(response.data.posts)
                 }
                 else {
-                    alert('fail to load posts')
+                    alert('fail to get posts')
                 }
             })
-    }, [])
+        if (PostID) {
 
-    const likeIconHandler = () => {
-        setisLiked(prevState => {
-            return !prevState
-        })
-    }
+            setTimeout(() => {
+                Axios.post('/api/like/getlikes', { postID: PostID })
+                    .then(response => {
+                        if (response.data.success) {
+                            setLikes(response.data.likes.length)
+                        }
+                        else {
+                            alert('fail to get likes')
+                        }
+                    })
 
-    const FallowClikedHandler = (value) => {
-        setFallowCliked(value);
-        props.FallowClikedHandler(value);
+            }, 60)
+        }
+    }, [PostID, ChangeLike])
+
+    const FollowClikedHandler = (value) => {
+        setFollowCliked(value);
+        props.FollowClikedHandler(value);
     }
     const commentHandler = (value) => {
         setChangeCommentView(value);
+    }
+
+    const likeHandler = (value) => {
+        setChangeLike(value)
     }
 
     const modalHandler = (e) => {
@@ -93,7 +109,7 @@ function FallowingPost(props) {
                     &nbsp;/ {post.writer.category[post.category].name}</p>
 
                 <div style={{ float: "right" }}>
-                    {post.writer._id && props.userid && post.writer._id !== props.userid && <Fallow userTo={post.writer._id} userFrom={props.userid} userToCategory={post.writer.category[post.category]._id} onClick={FallowClikedHandler} change={FallowCliked} />}
+                    {post.writer._id && props.userid && post.writer._id !== props.userid && <Follow userTo={post.writer._id} userFrom={props.userid} userToCategory={post.writer.category[post.category]._id} onClick={FollowClikedHandler} change={FollowCliked} />}
                 </div>
             </div>
 
@@ -101,9 +117,7 @@ function FallowingPost(props) {
             <p style={{ margin: "20px 0px 5px 10px" }} >{post.description}</p>
 
             <div style={{ width: "100%", height: "30px", paddingBottom: "5px", marginTop: "20px", marginBottom: "10px", paddingTop: "35px", display: "flex", alignItems: "center", borderTop: "1px solid #f0f0f0" }}>
-                <span onClick={likeIconHandler} style={{ marginLeft: "10px", marginRight: "15px" }}>
-                    {isLiked ? <SmileTwoTone style={{ fontSize: "25px" }} /> : <SmileOutlined style={{ fontSize: "25px" }} />}
-                </span>
+                <Like userID={props.userid} postID={post._id} onClick={likeHandler} change={ChangeLike} />
                 <CommentSave postID={post._id} commentTo={post.writer._id} writer={props.userid} AddCommentHandler={commentHandler} value={ChangeCommentView} />
             </div>
 
@@ -141,10 +155,9 @@ function FallowingPost(props) {
 
                         <Col span={11} style={{ height: "100%" }}>
                             <div style={{ marginLeft: "20px", display: "flex", alignItems: "center" }}>
-                                <span onClick={likeIconHandler} style={{ marginRight: "15px" }}>
-                                    {isLiked ? <SmileTwoTone style={{ fontSize: "25px" }} /> : <SmileOutlined style={{ fontSize: "25px" }} />}
-                                </span>
-                                <span>100 People Like This Post</span>
+
+                                <Like userID={props.userid} postID={PostID} onClick={likeHandler} change={ChangeLike} />
+                                <span>{Likes} People Like This Post</span>
                             </div>
 
                             <div>
@@ -160,4 +173,4 @@ function FallowingPost(props) {
     )
 }
 
-export default withRouter(FallowingPost);
+export default withRouter(FollowingPost);

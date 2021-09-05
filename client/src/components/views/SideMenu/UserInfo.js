@@ -9,9 +9,9 @@ const { TabPane } = Tabs;
 
 function UserMenu(props) {
 
-  var fallower = [];
-  const [FallowingList, setFallowingList] = React.useState([])
-  const [FallowerList, setFallowerList] = React.useState([])
+  var Follower = [];
+  const [FollowingList, setFollowingList] = React.useState([])
+  const [FollowerList, setFollowerList] = React.useState([])
 
   useEffect(() => { //돔이 로드되면 수행
 
@@ -21,23 +21,23 @@ function UserMenu(props) {
 
     if (props.userid) {
       setTimeout(() => {
-        Axios.post('/api/fallow/getFallowingList', variable)
+        Axios.post('/api/follow/getFollowingList', variable)
           .then(response => {
             if (response.data.success) {
-              setFallowingList(response.data.fallowing)
+              setFollowingList(response.data.Following)
             }
             else {
-              alert('fail to load fallowing list')
+              alert('fail to load Following list')
             }
           })
 
-        Axios.post('/api/fallow/getFallowerList', variable)
+        Axios.post('/api/follow/getFollowerList', variable)
           .then(response => {
             if (response.data.success) {
-              setFallowerList(response.data.fallower)
+              setFollowerList(response.data.Follower)
             }
             else {
-              alert('fail to load fallower list')
+              alert('fail to load Follower list')
             }
           })
       }, 60)
@@ -45,7 +45,7 @@ function UserMenu(props) {
   }, [props.change, props.userid])
 
 
-  const fallowinglist = FallowingList.map((item, index) => {
+  const Followinglist = FollowingList.map((item, index) => {
 
     let categoryName = ""
     item.userTo.category.forEach(element => {
@@ -66,10 +66,10 @@ function UserMenu(props) {
     </div>
   })
 
-  const fallowerlist = FallowerList.map((item, index) => {
+  const Followerlist = FollowerList.map((item, index) => {
 
-    if (fallower.indexOf(item.userFrom.name) === -1) {
-      fallower.push(item.userFrom.name);
+    if (Follower.indexOf(item.userFrom.name) === -1) {
+      Follower.push(item.userFrom.name);
       return <div key={index} style={{ borderBottom: "1px solid #f0f0f0", padding: "10px 20px 10px 20px" }}>
         <img alt="" src={item.userFrom.image} style={{ borderRadius: "50%", display: "inline" }} width="25px" height="25px" />
 
@@ -117,11 +117,11 @@ function UserMenu(props) {
         <Tabs defaultActiveKey="1">
           <TabPane disabled tab="&emsp;&ensp;" key="0" >
           </TabPane>
-          <TabPane tab="FALLOWING" key="1">
-            {fallowinglist}
+          <TabPane tab="FOLLOWING" key="1">
+            {Followinglist}
           </TabPane>
-          <TabPane tab="FALLOWER" key="2">
-            {fallowerlist}
+          <TabPane tab="FOLLOWER" key="2">
+            {Followerlist}
           </TabPane>
         </Tabs>
       </div>

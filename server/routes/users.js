@@ -64,7 +64,6 @@ router.get('/auth', auth, (req,res)=>{
     role: req.user.role,
     image: req.user.image
   });
-  
 });
 
 router.get('/logout', auth, (req,res)=>{

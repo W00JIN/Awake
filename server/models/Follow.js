@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = require('mongoose')
 
-const fallowSchema = mongoose.Schema({
+const followSchema = mongoose.Schema({
     userTo: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -17,6 +17,6 @@ const fallowSchema = mongoose.Schema({
 
 
 
-const Fallow = mongoose.model('Fallow', fallowSchema)
-module.exports = { Fallow }
+const Follow = mongoose.model('Follow', followSchema)
+module.exports = { Follow }
 

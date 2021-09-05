@@ -33,7 +33,7 @@ function NavBar(props) {
     );
 
     const logoutHandler = () => {
-        axios.get(`api/users/logout`)
+        axios.get(`/api/users/logout`)
             .then(response => {
                 if (response.data.success) {
                     props.history.push('/login');

@@ -9,8 +9,8 @@ export default function (SpecificComponent, option, adminRoute = null){
     const dispatch = useDispatch();
 
     function AthenticationCheck(props){
+        
         useEffect(() => {
-
             dispatch(auth()).then(response =>{
                 console.log(response);
 
@@ -33,8 +33,6 @@ export default function (SpecificComponent, option, adminRoute = null){
 
                 }
             })
-
-            
 
         }, [props.history])
         return (
